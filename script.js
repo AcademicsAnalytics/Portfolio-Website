@@ -343,49 +343,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const processMessage = (message) => {
         const lowerMessage = message.toLowerCase();
         
-        // Enhanced response logic with more comprehensive answers
+        // Basic response logic - can be expanded with more sophisticated responses
         if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-            return "Hi there! I'm excited to tell you about Erik's impressive tech journey. What would you like to know?";
+            return "Hello! How can I help you learn more about Erik?";
         } else if (lowerMessage.includes('skill') || lowerMessage.includes('experience')) {
-            return "Erik is a versatile tech professional with expertise in:\n\n" +
-                   "• Full Stack Development (JavaScript, React, Node.js)\n" +
-                   "• Cloud Architecture (AWS, Azure)\n" +
-                   "• Machine Learning & AI\n" +
-                   "• Blockchain Development\n" +
-                   "• Quantitative Development\n\n" +
-                   "He's particularly passionate about building scalable applications and implementing innovative solutions!";
+            return "Erik has extensive experience in web development, data analysis, and machine learning. He's proficient in JavaScript, Python, and various modern web technologies.";
         } else if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
-            return "Erik has an impressive portfolio of projects! Here are some highlights:\n\n" +
-                   "• Full Stack Web Applications\n" +
-                   "• Cloud-based Solutions\n" +
-                   "• Machine Learning Models for Stock Price Prediction\n" +
-                   "• Blockchain Applications\n" +
-                   "• Quantitative Trading Systems\n\n" +
-                   "You can find detailed code examples in his GitHub repositories!";
+            return "Erik has worked on numerous projects including web applications, data analysis tools, and machine learning models. You can find more details about his projects in the portfolio section above.";
         } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
-            return "You can connect with Erik through:\n\n" +
-                   "• LinkedIn: https://www.linkedin.com/in/erik-lorent-b949a1141/\n" +
-                   "• GitHub: https://github.com/AcademicsAnalytics\n" +
-                   "• Resume: Available through the document link in the footer\n\n" +
-                   "He's always excited to connect with fellow tech enthusiasts!";
+            return "You can reach Erik through LinkedIn or GitHub. Check out the social links in the footer!";
         } else if (lowerMessage.includes('resume') || lowerMessage.includes('cv')) {
-            return "You can view Erik's comprehensive resume here:\n" +
-                   "https://docs.google.com/document/d/1lPpbfHze1SSLppJ-1eCq0n49ETFy5B5rRWHl1Stp8ik/edit?usp=sharing\n\n" +
-                   "It details his professional experience, technical skills, and notable achievements!";
-        } else if (lowerMessage.includes('education') || lowerMessage.includes('background')) {
-            return "Erik has a strong academic background in Computer Science and Software Engineering. " +
-                   "He combines formal education with practical experience to deliver innovative solutions.";
-        } else if (lowerMessage.includes('technology') || lowerMessage.includes('tech stack')) {
-            return "Erik works with a modern tech stack including:\n\n" +
-                   "• Frontend: React, JavaScript, HTML5, CSS3\n" +
-                   "• Backend: Node.js, Python, Java\n" +
-                   "• Cloud: AWS, Azure, Docker\n" +
-                   "• Data Science: Python, TensorFlow, PyTorch\n" +
-                   "• Blockchain: Solidity, Web3.js\n\n" +
-                   "He stays current with emerging technologies and best practices!";
+            return "You can view Erik's resume by clicking the document icon in the footer. It contains detailed information about his experience and qualifications.";
         } else {
-            return "I'd be happy to tell you more about Erik's skills, projects, experience, or how to contact him. " +
-                   "What specific aspect would you like to know about?";
+            return "I'm not sure about that. You can ask me about Erik's skills, projects, experience, or how to contact him.";
         }
     };
 
