@@ -291,4 +291,109 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.add('fa-bars');
         }
     });
+});
+
+// Chatbot functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const chatbotContainer = document.querySelector('.chatbot-container');
+    const chatbotToggle = document.querySelector('.chatbot-toggle');
+    const chatbotWindow = document.querySelector('.chatbot-window');
+    const chatbotClose = document.querySelector('.chatbot-close');
+    const chatbotMessages = document.querySelector('.chatbot-messages');
+    const chatbotInput = document.querySelector('.chatbot-input input');
+    const sendButton = document.querySelector('.chatbot-input button');
+
+    // Toggle chatbot window
+    chatbotToggle.addEventListener('click', () => {
+        chatbotWindow.classList.add('active');
+        chatbotToggle.style.display = 'none';
+    });
+
+    chatbotClose.addEventListener('click', () => {
+        chatbotWindow.classList.remove('active');
+        chatbotToggle.style.display = 'block';
+    });
+
+    // Handle sending messages
+    const sendMessage = () => {
+        const message = chatbotInput.value.trim();
+        if (message) {
+            // Add user message
+            addMessage(message, 'user');
+            chatbotInput.value = '';
+
+            // Process the message and get response
+            const response = processMessage(message);
+            setTimeout(() => {
+                addMessage(response, 'bot');
+            }, 500);
+        }
+    };
+
+    // Add message to chat window
+    const addMessage = (text, sender) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chatbot-message', sender);
+        messageDiv.textContent = text;
+        chatbotMessages.appendChild(messageDiv);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    };
+
+    // Process user message and return appropriate response
+    const processMessage = (message) => {
+        const lowerMessage = message.toLowerCase();
+        
+        // Enhanced response logic with more comprehensive answers
+        if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+            return "Hi there! I'm excited to tell you about Erik's impressive tech journey. What would you like to know?";
+        } else if (lowerMessage.includes('skill') || lowerMessage.includes('experience')) {
+            return "Erik is a versatile tech professional with expertise in:\n\n" +
+                   "• Full Stack Development (JavaScript, React, Node.js)\n" +
+                   "• Cloud Architecture (AWS, Azure)\n" +
+                   "• Machine Learning & AI\n" +
+                   "• Blockchain Development\n" +
+                   "• Quantitative Development\n\n" +
+                   "He's particularly passionate about building scalable applications and implementing innovative solutions!";
+        } else if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
+            return "Erik has an impressive portfolio of projects! Here are some highlights:\n\n" +
+                   "• Full Stack Web Applications\n" +
+                   "• Cloud-based Solutions\n" +
+                   "• Machine Learning Models for Stock Price Prediction\n" +
+                   "• Blockchain Applications\n" +
+                   "• Quantitative Trading Systems\n\n" +
+                   "You can find detailed code examples in his GitHub repositories!";
+        } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
+            return "You can connect with Erik through:\n\n" +
+                   "• LinkedIn: https://www.linkedin.com/in/erik-lorent-b949a1141/\n" +
+                   "• GitHub: https://github.com/AcademicsAnalytics\n" +
+                   "• Resume: Available through the document link in the footer\n\n" +
+                   "He's always excited to connect with fellow tech enthusiasts!";
+        } else if (lowerMessage.includes('resume') || lowerMessage.includes('cv')) {
+            return "You can view Erik's comprehensive resume here:\n" +
+                   "https://docs.google.com/document/d/1lPpbfHze1SSLppJ-1eCq0n49ETFy5B5rRWHl1Stp8ik/edit?usp=sharing\n\n" +
+                   "It details his professional experience, technical skills, and notable achievements!";
+        } else if (lowerMessage.includes('education') || lowerMessage.includes('background')) {
+            return "Erik has a strong academic background in Computer Science and Software Engineering. " +
+                   "He combines formal education with practical experience to deliver innovative solutions.";
+        } else if (lowerMessage.includes('technology') || lowerMessage.includes('tech stack')) {
+            return "Erik works with a modern tech stack including:\n\n" +
+                   "• Frontend: React, JavaScript, HTML5, CSS3\n" +
+                   "• Backend: Node.js, Python, Java\n" +
+                   "• Cloud: AWS, Azure, Docker\n" +
+                   "• Data Science: Python, TensorFlow, PyTorch\n" +
+                   "• Blockchain: Solidity, Web3.js\n\n" +
+                   "He stays current with emerging technologies and best practices!";
+        } else {
+            return "I'd be happy to tell you more about Erik's skills, projects, experience, or how to contact him. " +
+                   "What specific aspect would you like to know about?";
+        }
+    };
+
+    // Event listeners for sending messages
+    sendButton.addEventListener('click', sendMessage);
+    chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
 }); 
