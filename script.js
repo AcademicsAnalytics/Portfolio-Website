@@ -294,73 +294,102 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Chatbot functionality
-document.addEventListener('DOMContentLoaded', () => {
-    const chatbotContainer = document.querySelector('.chatbot-container');
+document.addEventListener('DOMContentLoaded', function() {
     const chatbotToggle = document.querySelector('.chatbot-toggle');
     const chatbotWindow = document.querySelector('.chatbot-window');
     const chatbotClose = document.querySelector('.chatbot-close');
-    const chatbotMessages = document.querySelector('.chatbot-messages');
     const chatbotInput = document.querySelector('.chatbot-input input');
-    const sendButton = document.querySelector('.chatbot-input button');
+    const chatbotSend = document.querySelector('.chatbot-input button');
+    const chatbotMessages = document.querySelector('.chatbot-messages');
 
-    // Toggle chatbot window
-    chatbotToggle.addEventListener('click', () => {
-        chatbotWindow.classList.add('active');
-        chatbotToggle.style.display = 'none';
-    });
-
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.classList.remove('active');
-        chatbotToggle.style.display = 'block';
-    });
-
-    // Handle sending messages
-    const sendMessage = () => {
-        const message = chatbotInput.value.trim();
-        if (message) {
-            // Add user message
-            addMessage(message, 'user');
-            chatbotInput.value = '';
-
-            // Process the message and get response
-            const response = processMessage(message);
-            setTimeout(() => {
-                addMessage(response, 'bot');
-            }, 500);
+    // Project information
+    const projectInfo = {
+        'insurance agency website': {
+            description: 'A modern, responsive website for an insurance agency showcasing services and client information.',
+            link: 'https://laurentagency.com',
+            technologies: 'HTML, CSS, JavaScript'
+        },
+        'stock price prediction model': {
+            description: 'A Python-based machine learning model that predicts stock prices using Linear Regression, featuring data visualization and historical analysis.',
+            link: 'https://github.com/AcademicsAnalytics/Stock-Price-Prediction-Model',
+            technologies: 'Python, Machine Learning, Data Analysis'
+        },
+        'consulting website': {
+            description: 'A professional platform showcasing consulting services and expertise in technology solutions.',
+            link: 'https://laurentai.com',
+            technologies: 'HTML, CSS, JavaScript'
+        },
+        'bike sales excel sheet': {
+            description: 'Comprehensive data analysis and visualization of bike sales data using Excel.',
+            link: 'https://docs.google.com/spreadsheets/d/1KnWbA1Qwg46m7trsA0VTkknI3mTnQViHPT5uxWwVw54/edit?gid=1563490474#gid=1563490474',
+            technologies: 'Excel, Data Analysis, Pivot Tables'
         }
     };
 
-    // Add message to chat window
+    // Common questions and responses
+    const commonQuestions = {
+        'contact': 'You can reach me through the contact form on this website or directly at eroklorent@gmail.com. I\'m also available on LinkedIn.',
+        'resume': 'You can view my resume at https://docs.google.com/document/d/1h5DZHBKrP1dBB0NF9EfX3lBMhAZ85NQc8xeBQUtLNDk/edit?tab=t.0',
+        'github': 'You can find all my projects on GitHub at https://github.com/AcademicsAnalytics',
+        'linkedin': 'You can connect with me on LinkedIn at https://www.linkedin.com/in/erik-lorent-b949a1141/',
+        'projects': 'I have several projects including an Insurance Agency Website, Stock Price Prediction Model, Consulting Website, and a Bike Sales Excel Sheet. Would you like to know more about any specific project?',
+        'skills': 'My skills include Python, JavaScript, HTML/CSS, Data Analysis, Machine Learning, and Excel. Would you like to know more about any specific skill?'
+    };
+
+    const toggleChatbot = () => {
+        chatbotWindow.classList.toggle('active');
+    };
+
     const addMessage = (text, sender) => {
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('chatbot-message', sender);
+        messageDiv.className = `chatbot-message ${sender}`;
         messageDiv.textContent = text;
         chatbotMessages.appendChild(messageDiv);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     };
 
-    // Process user message and return appropriate response
     const processMessage = (message) => {
-        const lowerMessage = message.toLowerCase();
+        message = message.toLowerCase().trim();
         
-        // Basic response logic - can be expanded with more sophisticated responses
-        if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-            return "Hello! How can I help you learn more about Erik?";
-        } else if (lowerMessage.includes('skill') || lowerMessage.includes('experience')) {
-            return "Erik has extensive experience in web development, data analysis, and machine learning. He's proficient in JavaScript, Python, and various modern web technologies.";
-        } else if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
-            return "Erik has worked on numerous projects including web applications, data analysis tools, and machine learning models. You can find more details about his projects in the portfolio section above.";
-        } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
-            return "You can reach Erik through LinkedIn or GitHub. Check out the social links in the footer!";
-        } else if (lowerMessage.includes('resume') || lowerMessage.includes('cv')) {
-            return "You can view Erik's resume by clicking the document icon in the footer. It contains detailed information about his experience and qualifications.";
-        } else {
-            return "I'm not sure about that. You can ask me about Erik's skills, projects, experience, or how to contact him.";
+        // Check for project-specific questions
+        for (const [project, info] of Object.entries(projectInfo)) {
+            if (message.includes(project)) {
+                return `The ${project} is ${info.description}. It was built using ${info.technologies}. You can view it at ${info.link}`;
+            }
+        }
+
+        // Check for common questions
+        for (const [keyword, response] of Object.entries(commonQuestions)) {
+            if (message.includes(keyword)) {
+                return response;
+            }
+        }
+
+        // Default responses
+        if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+            return 'Hello! I\'m here to help you learn more about Erik\'s projects and experience. What would you like to know?';
+        }
+
+        if (message.includes('help')) {
+            return 'I can tell you about Erik\'s projects, skills, and how to contact him. Just ask about any of these topics!';
+        }
+
+        return 'I\'m not sure about that. You can ask me about Erik\'s projects, skills, or how to contact him.';
+    };
+
+    const sendMessage = () => {
+        const message = chatbotInput.value.trim();
+        if (message) {
+            addMessage(message, 'user');
+            const response = processMessage(message);
+            setTimeout(() => addMessage(response, 'bot'), 500);
+            chatbotInput.value = '';
         }
     };
 
-    // Event listeners for sending messages
-    sendButton.addEventListener('click', sendMessage);
+    chatbotToggle.addEventListener('click', toggleChatbot);
+    chatbotClose.addEventListener('click', toggleChatbot);
+    chatbotSend.addEventListener('click', sendMessage);
     chatbotInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             sendMessage();
